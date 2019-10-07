@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <style>
+            .output {color: darkorange;
+                     font: Verdana;}
+        </style>
+        <!-- LOAD p5.js libary so we can use a few of its tools -->
+        <!--this step we add a line at the top of the <head> section to accsess the libary -->
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+        
+        <script>
+            //STORE some data in "global" variables know to all functions
+            var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?begin_date=19950101&end_date=20191005&q=%22pokemon%22&api-key=JhkCaAN1MqFzIUw7kWluGbuCNZzKKt5Q";
+            var articleCount = 0
+            
+            //SETUP is a standard way P5 starts a script.
+            function setup(){
+                //P5 usually used for drawing
+                noCanvas();
+                //SEND the URL and when the data comes back, run the function "gotData"
+                loadJSON(url, gotData);
+            }
+            
+            //function gotDATA for now just announs itself
+            function gotData(data){
+                alert("FUNCTION GOT DATA ACTIVATED")
+                var text = ''
+                for (i = 0; i < data.response.docs.length; i++) {
+                    text = text + '<br />' + data.response.docs[i].headline.main
+                }
+                document.getElementById("test_output").innerHTML = text
+            }
+        </script>
+    </head>
+    
+    <body>
+        <h1>New York Times API: Articles from all time about Nintendo</h1>
+        <!--a <P> (paragraph) element we will use for output-->
+        <!--it's name is "test_output" and it is styled by the class "output" -->
+        <p id = "test_output" class = "output"></p>
+    </body>
+</html>
